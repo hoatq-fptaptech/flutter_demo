@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_demo/bloc/cart_bloc.dart';
 import 'package:flutter_demo/presentation/bookmark/bookmark_screen.dart';
+import 'package:flutter_demo/presentation/cart/cart_screen.dart';
 import 'package:flutter_demo/presentation/game/game_screen.dart';
 import 'package:flutter_demo/presentation/screen_type.dart';
 import 'package:flutter_demo/presentation/home/home_screen.dart';
@@ -8,9 +10,10 @@ import 'package:flutter_demo/provider/appbar_provider.dart';
 import 'package:provider/provider.dart';
 
 void main() {
+  final cartBloc = CartBloc();
   runApp(
     ChangeNotifierProvider(
-      create: (_) => AppBarProvider(),
+      create: (_) => CartBloc(),
       child: MyApp(),
     )
   );
@@ -78,7 +81,7 @@ class _MyHomePageState extends State<MyHomePage> {
             label: 'Bookmark',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.gamepad_outlined),
+            icon: Icon(Icons.shopping_cart_outlined),
             label: 'Shop',
           ),
           BottomNavigationBarItem(
@@ -108,7 +111,7 @@ class _MyHomePageState extends State<MyHomePage> {
     ScreenType screenType = ScreenType.values[index];
     switch (screenType) {
       case ScreenType.SHOP:
-        return GameScreen();
+        return CartScreen();
       case ScreenType.BOOKMARK:
         return BookmarkScreen();
       case ScreenType.PROFILE:

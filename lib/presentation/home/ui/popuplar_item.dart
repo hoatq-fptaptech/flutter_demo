@@ -1,13 +1,15 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_demo/bloc/cart_bloc.dart';
+import 'package:flutter_demo/model/entity/cart_item.dart';
 import 'package:flutter_demo/model/entity/product.dart';
 import 'package:flutter_demo/presentation/common/star_rating.dart';
+import 'package:provider/provider.dart';
 
 class PopularItem extends StatelessWidget{
   final Product product;
-  const PopularItem({super.key, required this.product});
-
+  PopularItem({super.key, required this.product});
   Color getRandomElement(int index) {
     final List<Color> colors = [
       const Color(0xFFC5EFD1),
@@ -74,7 +76,22 @@ class PopularItem extends StatelessWidget{
                       style: const TextStyle(
                         fontSize: 15,
                         fontWeight: FontWeight.w600
-                      ),)
+                      ),),
+                  FloatingActionButton(
+                    onPressed: () {
+                      final cartBloc = Provider.of<CartBloc>(context,listen: false);
+                      // Thêm một mục vào giỏ hàng
+                      CartItem newItem = CartItem(
+                        id: product.id??0,
+                        title: product.title??"",
+                        thumbnail: product.thumbnail??"",
+                        price: product.price??0,
+                        quantity: 1,
+                      );
+                      cartBloc.addToCart(newItem);
+                    },
+                    child: Icon(Icons.add_shopping_cart_rounded)
+                  )
                     ],
                   )),
             ],
